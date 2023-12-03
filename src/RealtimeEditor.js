@@ -7,15 +7,16 @@ const RealtimeEditor = () => {
 
   useEffect(() => {
     // Встановлюємо підключення при завантаженні компонента
-    setSocketConnection(socketIOClient(window.location.origin));
+    const socket = socketIOClient(window.location.origin);
+    setSocketConnection(socket);
 
     return () => {
       // Закриваємо підключення при виході з компонента
-      if (socketConnection) {
-        socketConnection.disconnect();
+      if (socket) {
+        socket.disconnect();
       }
     };
-  }, []);
+  }, []); // Одна зміна тут: видаліть залежність, оскільки ми використовуємо socket як замінник
 
   const handleCodeChange = (newCode) => {
     setCode(newCode);
